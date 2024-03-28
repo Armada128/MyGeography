@@ -24,7 +24,7 @@ ECEF ECEF::operator +(const ECEF& ecef) const { return {m_x + ecef.m_x, m_y + ec
 ECEF ECEF::operator -(const ECEF& ecef) const { return {m_x - ecef.m_x, m_y - ecef.m_y, m_z - ecef.m_z}; }
 
 Geodetic ECEF::toGeodetic(double initLatitude) const {
-    double longitude = R2D * atan2(m_y, m_x) + 180;
+    double longitude = MyGeography::R2D * atan2(m_y, m_x) + 180;
     double latitude;
     double latitude_last = initLatitude;
     double altitude;
@@ -32,11 +32,11 @@ Geodetic ECEF::toGeodetic(double initLatitude) const {
     int count_goodlatitude = 0;
     int count_iteration = 0;
     do{
-        double L = D2R * latitude_last;
-        double N = a / sqrt(1 - e_square * pow(sin(L), 2));
+        double L = MyGeography::D2R * latitude_last;
+        double N = MyGeography::a / sqrt(1 - MyGeography::e_square * pow(sin(L), 2));
         altitude = p / cos(L) - N;
-        latitude = R2D * atan2(m_z, p * (1 - e_square * N / (N + altitude)));
-        if(std::abs(latitude_last - latitude) < thresLatitude) count_goodlatitude++;
+        latitude = MyGeography::R2D * atan2(m_z, p * (1 - MyGeography::e_square * N / (N + altitude)));
+        if(std::abs(latitude_last - latitude) < MyGeography::thresLatitude) count_goodlatitude++;
         count_iteration++;
         latitude_last = latitude;
     } while(count_goodlatitude < 3 && count_iteration <= 20);

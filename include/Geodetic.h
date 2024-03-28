@@ -10,13 +10,15 @@
 
 class ECEF;
 
-constexpr double a = 6378137;
-constexpr double b = 6356752;
-constexpr double f = 1 / 298.257;
-constexpr double e_square = f * (2 - f);
-constexpr double thresLatitude = 1E-10;
-constexpr double D2R = M_PI / 180;
-constexpr double R2D = 180 / M_PI;
+namespace MyGeography {
+    constexpr double a = 6378137;
+    constexpr double b = 6356752;
+    constexpr double f = 1 / 298.257;
+    constexpr double e_square = f * (2 - f);
+    constexpr double thresLatitude = 1E-10;
+    constexpr double D2R = M_PI / 180;
+    constexpr double R2D = 180 / M_PI;
+}
 
 class Geodetic {
 public:
